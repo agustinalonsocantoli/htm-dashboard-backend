@@ -1,0 +1,102 @@
+[
+    {   
+        "src": "",
+        "name": "Suite 001",
+        "id": "R001", 
+        "type": "Suite",
+        "amenities": ["Air conditioner", "Shower", "Towels", "Smart Locker", "24 Hours Guard", "Free Wifi", "Television", "Room Services"],
+        "price": 300,
+        "offer": 15,
+        "status": "Available"
+    },
+    {
+        "src": "",
+        "name": "Deluxe 110",
+        "id": "R002", 
+        "type": "Double Bed",
+        "amenities": ["Air conditioner", "Shower", "Towels", "Smart Locker", "Free Wifi", "Television"],
+        "price": 195,
+        "offer": 10,
+        "status": "Available"
+    },
+    {
+        "src": "",
+        "name": "Deluxe 120",
+        "id": "R003", 
+        "type": "Double Bed",
+        "amenities": ["Air conditioner", "Shower", "Towels", "Smart Locker", "Free Wifi", "Television", "Room Services"],
+        "price": 195,
+        "offer": 10,
+        "status": "Booked"
+    },
+    {
+        "src": "",
+        "name": "Single 210",
+        "id": "R004", 
+        "type": "Single Bed",
+        "amenities": ["Air conditioner", "Shower", "Towels", "Smart Locker"],
+        "price": 130,
+        "offer": 10,
+        "status": "Available"
+    },
+    {
+        "src": "",
+        "name": "Single 220",
+        "id": "R005", 
+        "type": "Single Bed",
+        "amenities": ["Air conditioner", "Shower", "Towels", "Smart Locker"],
+        "price": 130,
+        "offer": 10,
+        "status": "Booked"
+    },
+    {
+        "src": "",
+        "name": "Deluxe 310",
+        "id": "R006", 
+        "type": "Double Superior",
+        "amenities": ["Air conditioner", "Shower", "Towels", "Smart Locker", "Free Wifi", "Television", "Room Services"],
+        "price": 220,
+        "offer": 10,
+        "status": "Booked"
+    },
+    {
+        "src": "",
+        "name": "Deluxe 420",
+        "id": "R007", 
+        "type": "Double Bed",
+        "amenities": ["Air conditioner", "Shower", "Towels", "Smart Locker", "Free Wifi", "Television"],
+        "price": 195,
+        "offer": 10,
+        "status": "Available"
+    },
+    {
+        "src": "",
+        "name": "Deluxe 320",
+        "id": "R008", 
+        "type": "Double Superior",
+        "amenities": ["Air conditioner", "Shower", "Towels", "Smart Locker", "Free Wifi", "Television", "Room Services"],
+        "price": 220,
+        "offer": 10,
+        "status": "Booked"
+    },
+    {
+        "src": "",
+        "name": "Suite 002",
+        "id": "R009", 
+        "type": "Suite",
+        "amenities": ["Air conditioner", "Shower", "Towels", "Smart Locker", "24 Hours Guard", "Free Wifi", "Television", "Room Services"],
+        "price": 300,
+        "offer": 15,
+        "status": "Available"
+    },
+    {
+        "src": "",
+        "name": "Deluxe 410",
+        "id": "R010", 
+        "type": "Double Bed",
+        "amenities": ["Air conditioner", "Shower", "Towels", "Smart Locker", "Free Wifi", "Television"],
+        "price": 195,
+        "offer": 10,
+        "status": "Booked"
+    }
+]

@@ -1,0 +1,102 @@
+[
+    {   
+        "src": "",
+        "name": "Gabriel Rodriguez",
+        "id": "U00001",
+        "email": "grodriguez@hm.com",
+        "start": "2020-01-10",
+        "job": "Directing phone calls, coordinating travel plans.",
+        "contact": "012 334 55512",
+        "status": "active"
+    },
+    {   
+        "src": "",
+        "name": "Gonzalo Gomez",
+        "id": "U00002",
+        "email": "ggomez@hm.com",
+        "start": "2020-03-14",
+        "job": "Directing phone calls, coordinating travel plans.",
+        "contact": "012 334 55512",
+        "status": "active"
+    },
+    {   
+        "src": "",
+        "name": "Agustin Corominas",
+        "id": "U00003",
+        "email": "acorominas@hm.com",
+        "start": "2020-05-28",
+        "job": "Directing phone calls, coordinating travel plans.",
+        "contact": "012 334 55512",
+        "status": "inactive"
+    },
+    {   
+        "src": "",
+        "name": "Lucas alvarez",
+        "id": "U00004",
+        "email": "lalvarez@hm.com",
+        "start": "2021-01-09",
+        "job": "Directing phone calls, coordinating travel plans.",
+        "contact": "012 334 55512",
+        "status": "inactive"
+    },
+    {   
+        "src": "",
+        "name": "Nicolas Mendes Neto",
+        "id": "U00005",
+        "email": "nmendesneto@hm.com",
+        "start": "2021-07-21",
+        "job": "Directing phone calls, coordinating travel plans.",
+        "contact": "012 334 55512",
+        "status": "active"
+    },
+    {   
+        "src": "",
+        "name": "Lorenzo Reyes",
+        "id": "U00006",
+        "email": "lreyez@hm.com",
+        "start": "2022-05-25",
+        "job": "Directing phone calls, coordinating travel plans.",
+        "contact": "012 334 55512",
+        "status": "inactive"
+    },
+    {   
+        "src": "",
+        "name": "Julian Gorbaran",
+        "id": "U00007",
+        "email": "jgorbaran@hm.com",
+        "start": "2022-09-04",
+        "job": "Directing phone calls, coordinating travel plans.",
+        "contact": "012 334 55512",
+        "status": "active"
+    },
+    {   
+        "src": "",
+        "name": "Federico Alcaraz",
+        "id": "U00008",
+        "email": "falcaraz@hm.com",
+        "start": "2023-01-01",
+        "job": "Directing phone calls, coordinating travel plans.",
+        "contact": "012 334 55512",
+        "status": "inactive"
+    },
+    {   
+        "src": "",
+        "name": "Franco Matteo",
+        "id": "U00009",
+        "email": "fmatteo@hm.com",
+        "start": "2023-02-01",
+        "job": "Directing phone calls, coordinating travel plans.",
+        "contact": "012 334 55512",
+        "status": "inactive"
+    },
+    {   
+        "src": "",
+        "name": "Agustin Alonso",
+        "id": "U00010",
+        "email": "agustin@hm.com",
+        "start": "2023-02-20",
+        "job": "Manager",
+        "contact": "012 334 55512",
+        "status": "active"
+    }
+]
