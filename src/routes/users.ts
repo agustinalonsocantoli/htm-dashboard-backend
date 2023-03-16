@@ -1,25 +1,16 @@
 import express from "express";
+import usersController from "../controllers/users";
 
 const router = express.Router();
 
-router.get('/', (_req, res) => {
-    res.send('ALL USERS')
-})
+router.get('/', usersController.getUsers)
 
-router.get('/:id?', (_req, res) => {
-    res.send('ONE USER')
-})
+router.get('/:id?', usersController.getUser)
 
-router.post('/new-user', (_req, res) => {
-    res.send('CREATE NEW USER')
-})
+router.post('/new-user', usersController.newUser)
 
-router.put('/:id', (_req, res) => {
-    res.send('UPDATE USER')
-})
+router.put('/:id', usersController.uptadeUser)
 
-router.delete('/:id', (_req, res) => {
-    res.send('DELETE USER')
-})
+router.delete('/:id', usersController.deleteUser)
 
 export default router;

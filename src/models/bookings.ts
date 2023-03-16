@@ -1,4 +1,4 @@
-export type Bookings = {
+export type Booking = {
     src: any;
     id: string; 
     name: string;

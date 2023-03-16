@@ -1,4 +1,4 @@
-export type Rooms = {
+export type Room = {
     src: any;
     name: string;
     id: string; 

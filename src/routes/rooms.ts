@@ -1,25 +1,16 @@
 import express from "express";
+import roomsController from "../controllers/rooms";
 
 const router = express.Router();
 
-router.get('/', (_req, res) => {
-    res.send('ALL ROOMS')
-})
+router.get('/', roomsController.getRooms)
 
-router.get('/:id?', (_req, res) => {
-    res.send('ONE ROOM')
-})
+router.get('/:id?', roomsController.getRoom)
 
-router.post('/new-room', (_req, res) => {
-    res.send('CREATE NEW ROOM')
-})
+router.post('/new-room', roomsController.newRoom)
 
-router.put('/:id', (_req, res) => {
-    res.send('UPDATE ROOM')
-})
+router.put('/:id', roomsController.uptadeRoom)
 
-router.delete('/:id', (_req, res) => {
-    res.send('DELETE ROOM')
-})
+router.delete('/:id', roomsController.deleteRoom)
 
 export default router;

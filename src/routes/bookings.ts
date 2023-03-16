@@ -1,25 +1,16 @@
 import express from "express";
+import bookingsController from "../controllers/bookings";
 
 const router = express.Router();
 
-router.get('/', (_req, res) => {
-    res.send('ALL BOOKINGS')
-})
+router.get('/', bookingsController.getBookings)
 
-router.get('/:id?', (_req, res) => {
-    res.send('ONE BOOK')
-})
+router.get('/:id?', bookingsController.getBook)
 
-router.post('/new-book', (_req, res) => {
-    res.send('CREATE NEW BOOK')
-})
+router.post('/new-book', bookingsController.newBook)
 
-router.put('/:id', (_req, res) => {
-    res.send('UPDATE BOOK')
-})
+router.put('/:id', bookingsController.uptadeBook)
 
-router.delete('/:id', (_req, res) => {
-    res.send('DELETE BOOK')
-})
+router.delete('/:id', bookingsController.deleteBook)
 
 export default router;

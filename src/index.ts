@@ -12,20 +12,20 @@ app.use(express.json());
 const PORT = 3000;
 
 // CORS
-app.use((_, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
-    next();
-});
+// app.use((_, res, next) => {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+//     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+//     next();
+// });
 
 // ROUTES
-app.use('/api', homeRouter);
-app.use('/api/rooms', roomsRouter);
-app.use('/api/bookings', bookingsRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/contact', reviewsRouter);
+app.use('/public', homeRouter);
+app.use('/private/rooms', roomsRouter);
+app.use('/private/bookings', bookingsRouter);
+app.use('/private/users', usersRouter);
+app.use('/private/contact', reviewsRouter);
 
 // SERVER
 try {
