@@ -7,7 +7,7 @@ router.get('/', reviewsController.getReviews)
 
 router.get('/:id?', reviewsController.getReview)
 
-router.post('/new-review', reviewsController.newReview)
+router.post('/', reviewsController.newReview)
 
 router.put('/:id', reviewsController.uptadeReview)
 
