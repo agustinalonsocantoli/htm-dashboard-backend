@@ -1,32 +1,53 @@
 import bookingsData from '../JSON/DataBookings.json';
-import { Booking } from '../models/bookings';
 
-let bookingsController = {
+const bookingsController = {
 
-    getBookings: async (_req: any, res: any): Promise<Booking[]> => {
-        const data = await res.json({bookings: bookingsData});
+    getBookings: (_req: any, res: any): Response | void => {
+        try{
+            return res.json({bookings: bookingsData});
 
-        return data
+            
+        } catch(err) {
+
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
-    getBook: async (req: any, res: any): Promise<Booking> => {
-        const data = await res.json({book: bookingsData.find(book => book.id === req.params.id)});
+    getBook: (req: any, res: any): Response | void => {
+        try{
+            return res.json({book: bookingsData.find(book => book.id === req.params.id)});
+        } catch(err) {
 
-        return data
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
-    newBook: async (req: any, res: any): Promise<Booking> => {
-        const data = await res.json ({success: true, book: req.body});
+    newBook: (req: any, res: any): Response | void => {
+        try{
+            return res.json ({success: true, book: req.body});
+        } catch(err) {
 
-        return data
+            res.send({message: "Error"});
+            console.log(err);
+        }
+
     },
-    uptadeBook: async (_req: any, res: any): Promise<Booking> => {
-        const data = await res.json ({success: true});
+    uptadeBook: (_req: any, res: any): Response | void => {
+        try{
+            return res.json ({success: true});
+        } catch(err) {
 
-        return data
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
-    deleteBook: async (_req: any, res: any): Promise<Booking> => {
-        const data = await res.json ({success: true});
-
-        return data
+    deleteBook: (_req: any, res: any): Response | void => {
+        try{
+            return res.json ({success: true});
+        } catch(err) {
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
 }
 

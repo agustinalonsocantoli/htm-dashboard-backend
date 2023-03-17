@@ -1,32 +1,51 @@
 import roomsData from '../JSON/DataRooms.json';
-import { Room } from '../models/rooms';
 
-let roomsController = {
+const roomsController = {
 
-    getRooms: async (_req: any, res: any): Promise<Room[]> => {
-        const data = await res.json({rooms: roomsData});
+    getRooms: (_req: any, res: any): Response | void => {
+        try{
 
-        return data
+            return res.json({rooms: roomsData});
+        } catch(err) {
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
-    getRoom: async (req: any, res: any): Promise<Room> => {
-        const data = await res.json({room: roomsData.find(room => room.id === req.params.id)});
+    getRoom: (req: any, res: any): Response | void => {
+        try{
 
-        return data
+            return res.json({room: roomsData.find(room => room.id === req.params.id)});
+        } catch(err) {
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
-    newRoom: async (req: any, res: any): Promise<Room> => {
-        const data = await res.json ({success: true, room: req.body});
+    newRoom: (req: any, res: any): Response | void => {
+        try{
 
-        return data
+            return res.json ({success: true, room: req.body});
+        } catch(err) {
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
-    uptadeRoom: async (_req: any, res: any): Promise<Room> => {
-        const data = await res.json ({success: true});
+    uptadeRoom: (_req: any, res: any): Response | void => {
+        try{
 
-        return data
+            return res.json ({success: true});
+        } catch(err) {
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
-    deleteRoom: async (_req: any, res: any): Promise<Room> => {
-        const data = await res.json ({success: true});
+    deleteRoom: (_req: any, res: any): Response | void => {
+        try{
 
-        return data
+            return res.json ({success: true});
+        } catch(err) {
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
 }
 
