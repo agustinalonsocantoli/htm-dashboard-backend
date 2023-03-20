@@ -1,8 +1,9 @@
 import usersData from '../JSON/DataUsers.json';
+import { Request, Response } from 'express';
 
 const usersController = {
 
-    getUsers: (_req: any, res: any): Response | void => {
+    getUsers: (_req: Request, res: Response): Response | void => {
         try{
 
             return res.json({users: usersData});
@@ -12,7 +13,7 @@ const usersController = {
             console.log(err);
         }
     },
-    getUser: (req: any, res: any): Response | void => {
+    getUser: (req: Request, res: Response): Response | void => {
         try{
 
             return res.json({user: usersData.find(user => user.id === req.params.id)});
@@ -22,7 +23,7 @@ const usersController = {
             console.log(err);
         }
     },
-    newUser: (req: any, res: any): Response | void => {
+    newUser: (req: Request, res: Response): Response | void => {
         try{
 
             return res.json ({success: true, user: req.body});
@@ -32,7 +33,7 @@ const usersController = {
             console.log(err);
         }
     },
-    uptadeUser: (_req: any, res: any): Response | void => {
+    uptadeUser: (_req: Request, res: Response): Response | void => {
         try{
 
             return res.json ({success: true});
@@ -42,7 +43,7 @@ const usersController = {
             console.log(err);
         }
     },
-    deleteUser: (_req: any, res: any): Response | void => {
+    deleteUser: (_req: Request, res: Response): Response | void => {
         try{
 
             return res.json ({success: true});

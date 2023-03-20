@@ -1,8 +1,9 @@
 import reviewsData from '../JSON/DataReviews.json';
+import { Request, Response } from 'express';
 
 const reviewsController = {
 
-    getReviews: (_req: any, res: any): Response | void => {
+    getReviews: (_req: Request, res: Response): Response | void => {
         try{
             
             return res.json({reviews: reviewsData});
@@ -12,7 +13,7 @@ const reviewsController = {
             console.log(err);
         }
     },
-    getReview: (req: any, res: any): Response | void => {
+    getReview: (req: Request, res: Response): Response | void => {
         try{
             
             return res.json({review: reviewsData.find(review => review.id === req.params.id)});
@@ -22,7 +23,7 @@ const reviewsController = {
             console.log(err);
         }
     },
-    newReview: (req: any, res: any): Response | void => {
+    newReview: (req: Request, res: Response): Response | void => {
         try{
             
             return res.json ({success: true, review: req.body});
@@ -32,7 +33,7 @@ const reviewsController = {
             console.log(err);
         }
     },
-    uptadeReview: (_req: any, res: any): Response | void => {
+    uptadeReview: (_req: Request, res: Response): Response | void => {
         try{
             
             return res.json ({success: true});
@@ -42,7 +43,7 @@ const reviewsController = {
             console.log(err);
         }
     },
-    deleteReview: (_req: any, res: any): Response | void => {
+    deleteReview: (_req: Request, res: Response): Response | void => {
         try{
 
             return res.json ({success: true});

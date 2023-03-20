@@ -1,8 +1,9 @@
 import bookingsData from '../JSON/DataBookings.json';
+import { Request, Response } from 'express';
 
 const bookingsController = {
 
-    getBookings: (_req: any, res: any): Response | void => {
+    getBookings: (_req: Request, res: Response): Response | void => {
         try{
             return res.json({bookings: bookingsData});
 
@@ -13,7 +14,7 @@ const bookingsController = {
             console.log(err);
         }
     },
-    getBook: (req: any, res: any): Response | void => {
+    getBook: (req: Request, res: Response): Response | void => {
         try{
             return res.json({book: bookingsData.find(book => book.id === req.params.id)});
         } catch(err) {
@@ -22,7 +23,7 @@ const bookingsController = {
             console.log(err);
         }
     },
-    newBook: (req: any, res: any): Response | void => {
+    newBook: (req: Request, res: Response): Response | void => {
         try{
             return res.json ({success: true, book: req.body});
         } catch(err) {
@@ -32,7 +33,7 @@ const bookingsController = {
         }
 
     },
-    uptadeBook: (_req: any, res: any): Response | void => {
+    uptadeBook: (_req: Request, res: Response): Response | void => {
         try{
             return res.json ({success: true});
         } catch(err) {
@@ -41,7 +42,7 @@ const bookingsController = {
             console.log(err);
         }
     },
-    deleteBook: (_req: any, res: any): Response | void => {
+    deleteBook: (_req: Request, res: Response): Response | void => {
         try{
             return res.json ({success: true});
         } catch(err) {

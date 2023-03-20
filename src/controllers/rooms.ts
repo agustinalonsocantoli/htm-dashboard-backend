@@ -1,8 +1,9 @@
 import roomsData from '../JSON/DataRooms.json';
+import { Request, Response } from 'express';
 
 const roomsController = {
 
-    getRooms: (_req: any, res: any): Response | void => {
+    getRooms: (_req: Request, res: Response): Response | void => {
         try{
 
             return res.json({rooms: roomsData});
@@ -11,7 +12,7 @@ const roomsController = {
             console.log(err);
         }
     },
-    getRoom: (req: any, res: any): Response | void => {
+    getRoom: (req: Request, res: Response): Response | void => {
         try{
 
             return res.json({room: roomsData.find(room => room.id === req.params.id)});
@@ -20,7 +21,7 @@ const roomsController = {
             console.log(err);
         }
     },
-    newRoom: (req: any, res: any): Response | void => {
+    newRoom: (req: Request, res: Response): Response | void => {
         try{
 
             return res.json ({success: true, room: req.body});
@@ -29,7 +30,7 @@ const roomsController = {
             console.log(err);
         }
     },
-    uptadeRoom: (_req: any, res: any): Response | void => {
+    uptadeRoom: (_req: Request, res: Response): Response | void => {
         try{
 
             return res.json ({success: true});
@@ -38,7 +39,7 @@ const roomsController = {
             console.log(err);
         }
     },
-    deleteRoom: (_req: any, res: any): Response | void => {
+    deleteRoom: (_req: Request, res: Response): Response | void => {
         try{
 
             return res.json ({success: true});
