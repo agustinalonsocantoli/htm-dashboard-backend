@@ -7,7 +7,7 @@ router.get('/', roomsController.getRooms)
 
 router.get('/:id?', roomsController.getRoom)
 
-router.post('/new-room', roomsController.newRoom)
+router.post('/', roomsController.newRoom)
 
 router.put('/:id', roomsController.uptadeRoom)
 

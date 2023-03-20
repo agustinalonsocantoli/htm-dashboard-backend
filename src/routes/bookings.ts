@@ -7,7 +7,7 @@ router.get('/', bookingsController.getBookings)
 
 router.get('/:id?', bookingsController.getBook)
 
-router.post('/new-book', bookingsController.newBook)
+router.post('/', bookingsController.newBook)
 
 router.put('/:id', bookingsController.uptadeBook)
 

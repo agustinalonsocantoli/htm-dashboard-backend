@@ -1,32 +1,57 @@
 import reviewsData from '../JSON/DataReviews.json';
-import { Review } from '../models/reviews';
+import { Request, Response } from 'express';
 
-let reviewsController = {
+const reviewsController = {
 
-    getReviews: async (_req: any, res: any): Promise<Review[]> => {
-        const data = await res.json({reviews: reviewsData});
-
-        return data
+    getReviews: (_req: Request, res: Response): Response | void => {
+        try{
+            
+            return res.json({reviews: reviewsData});
+        } catch(err) {
+            
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
-    getReview: async (req: any, res: any): Promise<Review> => {
-        const data = await res.json({review: reviewsData.find(review => review.id === req.params.id)});
-
-        return data
+    getReview: (req: Request, res: Response): Response | void => {
+        try{
+            
+            return res.json({review: reviewsData.find(review => review.id === req.params.id)});
+        } catch(err) {
+            
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
-    newReview: async (req: any, res: any): Promise<Review> => {
-        const data = await res.json ({success: true, review: req.body});
-
-        return data
+    newReview: (req: Request, res: Response): Response | void => {
+        try{
+            
+            return res.json ({success: true, review: req.body});
+        } catch(err) {
+            
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
-    uptadeReview: async (_req: any, res: any): Promise<Review> => {
-        const data = await res.json ({success: true});
-
-        return data
+    uptadeReview: (_req: Request, res: Response): Response | void => {
+        try{
+            
+            return res.json ({success: true});
+        } catch(err) {
+            
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
-    deleteReview: async (_req: any, res: any): Promise<Review> => {
-        const data = await res.json ({success: true});
+    deleteReview: (_req: Request, res: Response): Response | void => {
+        try{
 
-        return data
+            return res.json ({success: true});
+        } catch(err) {
+
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
 }
 

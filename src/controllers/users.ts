@@ -1,32 +1,57 @@
 import usersData from '../JSON/DataUsers.json';
-import { User } from '../models/users';
+import { Request, Response } from 'express';
 
-let usersController = {
+const usersController = {
 
-    getUsers: async (_req: any, res: any): Promise<User[]> => {
-        const data = await res.json({users: usersData});
+    getUsers: (_req: Request, res: Response): Response | void => {
+        try{
 
-        return data
+            return res.json({users: usersData});
+        } catch(err) {
+
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
-    getUser: async (req: any, res: any): Promise<User> => {
-        const data = await res.json({user: usersData.find(user => user.id === req.params.id)});
+    getUser: (req: Request, res: Response): Response | void => {
+        try{
 
-        return data
+            return res.json({user: usersData.find(user => user.id === req.params.id)});
+        } catch(err) {
+
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
-    newUser: async (req: any, res: any): Promise<User> => {
-        const data = await res.json ({success: true, user: req.body});
+    newUser: (req: Request, res: Response): Response | void => {
+        try{
 
-        return data
+            return res.json ({success: true, user: req.body});
+        } catch(err) {
+
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
-    uptadeUser: async (_req: any, res: any): Promise<User> => {
-        const data = await res.json ({success: true});
+    uptadeUser: (_req: Request, res: Response): Response | void => {
+        try{
 
-        return data
+            return res.json ({success: true});
+        } catch(err) {
+
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
-    deleteUser: async (_req: any, res: any): Promise<User> => {
-        const data = await res.json ({success: true});
+    deleteUser: (_req: Request, res: Response): Response | void => {
+        try{
 
-        return data
+            return res.json ({success: true});
+        } catch(err) {
+
+            res.send({message: "Error"});
+            console.log(err);
+        }
     },
 }
 
