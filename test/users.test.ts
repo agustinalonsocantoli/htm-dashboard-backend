@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../src/index';
+import app from '../src/app';
 import jwt from "jsonwebtoken";
 import 'dotenv/config'
 
