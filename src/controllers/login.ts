@@ -3,7 +3,7 @@ import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
 
-const secretToken = process.env.SECRET_KEY === undefined ? 'TOP_SECRET' : process.env.SECRET_KEY
+export const secretToken = process.env.SECRET_KEY === undefined ? 'TOP_SECRET' : process.env.SECRET_KEY
 
 
 const loginController = {

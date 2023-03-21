@@ -14,12 +14,12 @@ dotenv.config()
 const app: Application = express();
 
 // PORT
-const PORT = 3000;
+const PORT = process.env.PORT_KEY;
 
 require('./auth/auth');
 
 // CORS
-const allowedOrigins = ['http://localhost:3000'];
+const allowedOrigins = [`http://localhost:${PORT}`];
 
 const options: cors.CorsOptions = {
   origin: allowedOrigins
@@ -49,8 +49,10 @@ app.use((_req, res) => {
 // SERVER
 try {
     app.listen(PORT, () => {
-        console.log(`Server run port ${PORT}`);
+        console.log(`Server Run`);
     })
 } catch(err) {
     console.log(err);
 }
+
+export default app;

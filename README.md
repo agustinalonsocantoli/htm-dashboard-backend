@@ -2,15 +2,16 @@
 
 <h3 align="center">Full Stack Developer</h3>
 
-<h4 align="center">🔭 Les presento "PokeDex"</h4>
-
 ## Descripcion 📖
 
- WebApp con ApiRest pokemon, se muestran 400 tipos de pokemon diferentes en formato de card con sus respectivos stack y una entrada para buscar mas facilmente un tipo de pokemon específico.
+Backend Hotel Miranda Dashboard, creando base de datos para conectar con la web.
 
 ## Tecnologías 🛠️
 
-- 
+- Node.JS
+- Express
+- TypeScript
+- Jest
 
 ## Contribuyendo
 

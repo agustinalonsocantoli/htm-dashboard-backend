@@ -29,7 +29,7 @@ passport.use('login',
 
 passport.use(
     new JWTstrategy({
-        secretOrKey: process.env.SECRET_KEY || 'TOP_SECRET',
+        secretOrKey: process.env.SECRET_KEY,
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
     }, async (token: any, done: Function) => {
         try{
