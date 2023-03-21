@@ -16,47 +16,47 @@ beforeAll(() => {
 
 describe('Endpoints', () => {
     
-    test("GET method all rooms without token", async () => {
+    test("GET method all reviews without token", async () => {
         const res = await request(app)
-        .get("/api/rooms")
+        .get("/api/contact")
 
         expect(res.statusCode).toEqual(401)
     })
 
-    test('GET method all rooms', async () => {
+    test('GET method all reviews', async () => {
         const res = await request(app)
-        .get('/api/rooms')
+        .get('/api/contact')
         .set("Authorization", "Bearer " + token);
         
         expect(res.statusCode).toEqual(200)
         expect(res.body).toBeInstanceOf(Object)
     })
 
-    test('GET method room', async () => {
+    test('GET method review', async () => {
         const res = await request(app)
-        .get('/api/rooms/R002')
+        .get('/api/contact/C0002')
         .set("Authorization", "Bearer " + token);
         
         expect(res.statusCode).toEqual(200)
         expect(res.body).toBeInstanceOf(Object)
       })
 
-    test('POST method new room', async () => {
-        const newRoom = {
-            src: "",
-            name: "Suite 33",
-            id: "R020", 
-            type: "Suite",
-            amenities: ["Air conditioner", "Shower", "Towels"],
-            price: 900,
-            offer: 50,
-            status: "Available"
+    test('POST method new review', async () => {
+        const newReview = {
+            id: "C0025",
+            date: "2022-03-07",
+            customer: "Kusnaidi Anderson",
+            email: "kanderson@gmail.com",
+            phone: "+34 623 455 928",
+            affair: "recommendation",
+            comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
+            archived: false
         }
 
         const res = await request(app)
-        .post('/api/rooms')
+        .post('/api/contact')
         .set("Authorization", "Bearer " + token)
-        .send(newRoom)
+        .send(newReview)
 
         expect(res.statusCode).toEqual(200)
     })
