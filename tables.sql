@@ -53,3 +53,10 @@ CREATE TABLE `hotelMiranda`.`reviews` (
   `archived` TINYINT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
+
+CREATE TABLE `hotelMiranda`.`rooms_amenities` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `id_room` INT NULL,
+  `id_amenitie` INT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);

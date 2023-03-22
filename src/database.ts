@@ -30,9 +30,12 @@ export const dbEnd = () => {
 }
 
 export const dbQuery = (query: any, data: object | null = null) => {
-    connection.query( query, data, function(_results, fields) {
+    return new Promise((resolve, reject) => {
+        connection.query( query, data, function(error, results) {
+                if(error) reject(error);
 
-        console.log(fields); 
-        }
-    );
+                resolve(results)
+            }
+        );
+    })
 }
