@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev src/index.ts",
+    "seed": "ts-node-dev src/seed.ts",
     "tsc": "tsc",
     "start": "node build/index.js",
     "test": "jest"

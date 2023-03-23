@@ -1,10 +1,11 @@
 import mysql from 'mysql2';
+import 'dotenv/config';
 
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: process.env.DB_MYSQL_KEY,
-    database: 'hotelMiranda'
+    database: 'hotelmiranda',
 })
 
 export const dbConnection = () => {
@@ -35,6 +36,7 @@ export const dbQuery = (query: any, data: object | null = null) => {
                 if(error) reject(error);
 
                 resolve(results)
+                console.log(results);
             }
         );
     })
