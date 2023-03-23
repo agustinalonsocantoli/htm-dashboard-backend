@@ -1,7 +1,7 @@
 export type Room = {
     src: any;
     name: string;
-    id: string; 
+    id?: number; 
     type: string;
     amenities: string[];
     price: number;
