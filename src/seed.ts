@@ -85,7 +85,7 @@ function createRandomBooking(): Booking {
         note: faker.helpers.arrayElement(note),
         type: faker.helpers.arrayElement(['Double Bed', 'Single Bed', 'Double Superior']),
         status: faker.helpers.arrayElement(['Booked', 'Refund', 'Progress']),
-        id_room: 0
+        id_room: faker.datatype.number({ min: 1, max: 20 })
     };
 }
 
