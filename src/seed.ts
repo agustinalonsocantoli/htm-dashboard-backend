@@ -98,24 +98,30 @@ function createRandomReview(): Review {
 }
   
 async function insertDataBase() {
+    const insert = 'INSERT INTO users SET ?'
+
     for (let i = 0; i < 10; i++) {
         const userData = createRandomUser();
         console.log(userData);
+        await dbQuery(insert, userData);
     }
 
     for (let i = 0; i < 50; i++) {
         const roomData = createRandomRoom();
         console.log(roomData);
+        await dbQuery(insert, roomData);
     }
 
     for (let i = 0; i < 100; i++) {
         const bookingData = createRandomBooking();
         console.log(bookingData);
+        await dbQuery(insert, bookingData);
     }
 
     for (let i = 0; i < 20; i++) {
         const reviewData = createRandomReview();
         console.log(reviewData);
+        await dbQuery(insert, reviewData);
     }
 }
 
@@ -123,11 +129,12 @@ async function run() {
     dbConnection();
     // const result = await dbQuery(insert, user);
     // const amenities = await dbQuery("SELECT * FROM amenities");
-    const users = await dbQuery("SELECT password FROM users WHERE name = 'Agustin Alonso'");
+    // const users = await dbQuery("SELECT password FROM users WHERE name = 'Agustin Alonso'");
+    insertDataBase();
     dbEnd();
 
     // return [amenities, users]
-    return users
+    // return users
     // return result
 }
 
@@ -136,4 +143,3 @@ async function run() {
 // const insert = 'INSERT INTO users SET ?'
 
 run();
-insertDataBase();
