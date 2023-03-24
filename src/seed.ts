@@ -66,7 +66,6 @@ function createRandomRoom(): Room {
         name: `${faker.helpers.arrayElement(['Deluxe', 'Single'])} ${faker.datatype.number({ min: 100, max: 400 })}`,
         src: faker.helpers.arrayElement(imgRoom),
         type: faker.helpers.arrayElement(['Double Bed', 'Single Bed', 'Double Superior']),
-        amenities: [],
         price: faker.datatype.number({ min: 250, max: 750 }),
         offer: faker.datatype.number({ min: 5, max: 25 }),
         status: faker.helpers.arrayElement(['Booked', 'Available']),
@@ -87,6 +86,7 @@ function createRandomBooking(): Booking {
         note: faker.helpers.arrayElement(note),
         type: faker.helpers.arrayElement(['Double Bed', 'Single Bed', 'Double Superior']),
         status: faker.helpers.arrayElement(['Booked', 'Refund', 'Progress']),
+        id_room: 0
     };
 }
 
@@ -112,7 +112,7 @@ async function insertDataBase() {
         await dbQuery(insert, userData);
     }
 
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 30; i++) {
         const roomData = createRandomRoom();
         console.log(roomData);
         await dbQuery(insert, roomData);

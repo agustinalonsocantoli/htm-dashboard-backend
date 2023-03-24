@@ -10,4 +10,5 @@ export type Booking = {
     note: string;
     type: string;
     status: string;
+    id_room: number;
 }
