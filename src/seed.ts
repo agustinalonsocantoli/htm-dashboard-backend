@@ -62,7 +62,6 @@ function createRandomUser(): User {
 
 function createRandomRoom(): Room {
     return {
-        id: faker.datatype.number({ max: 999 }),
         name: `${faker.helpers.arrayElement(['Deluxe', 'Single'])} ${faker.datatype.number({ min: 100, max: 400 })}`,
         src: faker.helpers.arrayElement(imgRoom),
         type: faker.helpers.arrayElement(['Double Bed', 'Single Bed', 'Double Superior']),

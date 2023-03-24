@@ -1,4 +1,4 @@
-CREATE TABLE `hotelMiranda`.`rooms` (
+CREATE TABLE `hotelmiranda`.`rooms` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   `src` VARCHAR(255) NULL,
@@ -9,13 +9,13 @@ CREATE TABLE `hotelMiranda`.`rooms` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
 
-CREATE TABLE `hotelMiranda`.`amenities` (
+CREATE TABLE `hotelmiranda`.`amenities` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `amenitie` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
 
-CREATE TABLE `hotelMiranda`.`users` (
+CREATE TABLE `hotelmiranda`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(60) NULL,
   `src` VARCHAR(255) NULL,
@@ -27,7 +27,7 @@ CREATE TABLE `hotelMiranda`.`users` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
 
-CREATE TABLE `hotelMiranda`.`bookings` (
+CREATE TABLE `hotelmiranda`.`bookings` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(60) NULL,
   `src` VARCHAR(255) NULL,
@@ -42,7 +42,7 @@ CREATE TABLE `hotelMiranda`.`bookings` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
 
-CREATE TABLE `hotelMiranda`.`reviews` (
+CREATE TABLE `hotelmiranda`.`reviews` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `customer` VARCHAR(60) NULL,
   `date` DATETIME NULL,
@@ -54,7 +54,7 @@ CREATE TABLE `hotelMiranda`.`reviews` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
 
-CREATE TABLE `hotelMiranda`.`rooms_amenities` (
+CREATE TABLE `hotelmiranda`.`rooms_amenities` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `id_room` INT NULL,
   `id_amenitie` INT NULL,
