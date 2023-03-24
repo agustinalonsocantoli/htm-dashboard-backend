@@ -4,6 +4,7 @@ import { faker } from '@faker-js/faker';
 import { User } from './models/users';
 import { Room } from './models/rooms';
 import { Booking } from './models/bookings';
+import { Review } from './models/reviews';
 
 export const encryptPassword = (password: string): string => {
     
@@ -72,7 +73,7 @@ function createRandomBooking(): Booking {
         id: faker.datatype.number({ max: 999 }),
         name: faker.name.fullName(),
         src: faker.helpers.arrayElement(imgPerson),
-        date: '',
+        date: faker.date.between('2022-01-01', '2023-02-02'),
         checkinDate: '',
         checkinTime: '',
         checkoutDate: '',
@@ -80,6 +81,19 @@ function createRandomBooking(): Booking {
         note: '',
         type: '',
         status: faker.helpers.arrayElement(['Booked', 'Refund', 'Progress']),
+    };
+}
+
+function createRandomReview(): Review {
+    return {
+        id: faker.datatype.number({ max: 999 }),
+        date: faker.date.between('2022-01-01', '2023-02-02'),
+        customer: faker.name.fullName(),
+        email: faker.internet.email(),
+        phone: faker.phone.number('+34 ### ### ###'),
+        affair: '',
+        comment: '',
+        archived: true
     };
 }
   
@@ -97,6 +111,11 @@ async function insertDataBase() {
     for (let i = 0; i < 100; i++) {
         const bookingData = createRandomBooking();
         console.log(bookingData);
+    }
+
+    for (let i = 0; i < 20; i++) {
+        const reviewData = createRandomReview();
+        console.log(reviewData);
     }
 }
 
@@ -116,4 +135,5 @@ async function run() {
 // const user = {password: encryptPassword('000000')}
 // const insert = 'INSERT INTO users SET ?'
 
-run()
+run();
+insertDataBase();

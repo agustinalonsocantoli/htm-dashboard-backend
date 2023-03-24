@@ -2,7 +2,7 @@ export type Booking = {
     src: any;
     id?: number; 
     name: string;
-    date: string;
+    date: Date;
     checkinDate: string;
     checkinTime: string;
     checkoutDate: string;
