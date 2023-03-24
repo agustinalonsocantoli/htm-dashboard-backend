@@ -2,10 +2,10 @@ import mysql from 'mysql2';
 import 'dotenv/config';
 
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
+    host: process.env.DB_MYSQL_HOST,
+    user: process.env.DB_MYSQL_USER,
     password: process.env.DB_MYSQL_KEY,
-    database: 'hotelmiranda',
+    database: process.env.DB_MYSQL_DATABASE,
 })
 
 export const dbConnection = () => {
