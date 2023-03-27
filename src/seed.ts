@@ -6,20 +6,6 @@ import { Room } from './models/rooms';
 import { Booking } from './models/bookings';
 import { Review } from './models/reviews';
 
-export const encryptPassword = (password: string): string => {
-    
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(password, salt);
-
-    return hash
-}
-
-export const validatePassword = (password: string, token: string): boolean => {
-    const compare = bcrypt.compareSync(password, token);
-
-    return compare
-} 
-
 const imgPerson = [
     "https://images.unsplash.com/photo-1596305589440-2e180399a760?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
     "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80",
@@ -41,17 +27,35 @@ const imgRoom = [
 ]
 
 const note = [
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas id laoreet lacus. Etiam cras amet",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ultrices pulvinar sollicitudin. Fusce fringilla euismod mauris. Ut lobortis est ut mi",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dolor magna, suscipit id est a, elementum viverra ex. Sed ultrices tincidunt nibh, et semper elit pharetra commodo. Suspendisse erat curae",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sollicitudin elementum odio, et laoreet dui dapibus in. Curabitur nec accumsan tellus, mattis aliquam diam. Praesent felis augue, consequat sodales euismod at, sollicitudin sed"
 ]
 
-function createRandomUser(): User {
+const encryptPassword = (password: string): string => {
+    
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+
+    return hash
+}
+
+export const validatePassword = (password: string, token: string): boolean => {
+    const compare = bcrypt.compareSync(password, token);
+
+    return compare
+} 
+
+async function createRandomUser(idNum: number): Promise<User> {
+    const firstName = faker.name.firstName();
+    const lastName = faker.name.lastName();
+
     return {
-        id: faker.datatype.number({ max: 999 }),
-        name: faker.name.fullName(),
+        id: idNum,
+        name: `${firstName} ${lastName}`,
         src: faker.helpers.arrayElement(imgPerson),
-        email: faker.internet.email(),
+        email: faker.internet.email(firstName, lastName),
         start: faker.date.between('2022-01-01', '2023-02-02'),
         job: faker.helpers.arrayElement(['Receptionist', 'Room attendant', 'Assistant', 'Doorman', 'Valet parking', 'Security guard', 'Bartender']),
         contact: faker.phone.number('+34 ### ### ###'),
@@ -60,8 +64,10 @@ function createRandomUser(): User {
     };
 }
 
-function createRandomRoom(): Room {
+async function createRandomRoom(idNum: number): Promise<Room> {
+
     return {
+        id: idNum,
         name: `${faker.helpers.arrayElement(['Deluxe', 'Single'])} ${faker.datatype.number({ min: 100, max: 400 })}`,
         src: faker.helpers.arrayElement(imgRoom),
         type: faker.helpers.arrayElement(['Double Bed', 'Single Bed', 'Double Superior']),
@@ -72,29 +78,34 @@ function createRandomRoom(): Room {
 }
 
 
-function createRandomBooking(): Booking {
+async function createRandomBooking(idNum: number): Promise<Booking> {
+    const formatDate = faker.date.between('2022-01-01', '2023-02-02');
+    const formatCheckin = faker.date.between(formatDate, '2023-02-02');
+
     return {
-        id: faker.datatype.number({ max: 999 }),
+        id: idNum,
         name: faker.name.fullName(),
-        src: faker.helpers.arrayElement(imgPerson),
-        date: faker.date.between('2022-01-01', '2023-02-02'),
-        checkinDate: '',
-        checkinTime: '',
-        checkoutDate: '',
-        checkoutTime: '',
+        src: faker.internet.avatar(),
+        date: formatDate,
+        checkin: formatCheckin,
+        checkout: faker.date.between(formatCheckin, '2023-02-02'),
         note: faker.helpers.arrayElement(note),
         type: faker.helpers.arrayElement(['Double Bed', 'Single Bed', 'Double Superior']),
         status: faker.helpers.arrayElement(['Booked', 'Refund', 'Progress']),
-        id_room: faker.datatype.number({ min: 1, max: 20 })
+        id_room: faker.datatype.number({ min: 1, max: 50 })
     };
 }
 
-function createRandomReview(): Review {
+async function createRandomReview(idNum: number): Promise<Review> {
+    const firstName = faker.name.firstName();
+    const lastName = faker.name.lastName();
+
     return {
-        id: faker.datatype.number({ max: 999 }),
+        id: idNum,
+        src: faker.internet.avatar(),
         date: faker.date.between('2022-01-01', '2023-02-02'),
-        customer: faker.name.fullName(),
-        email: faker.internet.email(),
+        customer: `${firstName} ${lastName}`,
+        email: faker.internet.email(firstName, lastName),
         phone: faker.phone.number('+34 ### ### ###'),
         affair: "recommendation",
         comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
@@ -102,49 +113,71 @@ function createRandomReview(): Review {
     };
 }
   
-async function insertDataBase() {
-    const insert = 'INSERT INTO users SET ?'
+async function insertUsers() {
 
-    for (let i = 0; i < 10; i++) {
-        const userData = createRandomUser();
-        console.log(userData);
-        await dbQuery(insert, userData);
+    for (let i = 1; i < 21; i++) {
+        const userData = await createRandomUser(i);
+
+        await dbQuery('INSERT INTO users SET ?', userData);
     }
+}
 
-    for (let i = 0; i < 30; i++) {
-        const roomData = createRandomRoom();
-        console.log(roomData);
-        await dbQuery(insert, roomData);
+async function insertRooms() {
+
+    for (let i = 1; i < 51; i++) {
+        const roomData = await createRandomRoom(i);
+
+        await dbQuery('INSERT INTO rooms SET ?', roomData);
+        const newRoom: any = roomData;
+
+        const numAmenities = faker.datatype.number({ min: 1 , max: 8 });
+        const added = new Set()
+
+        for (let j = 0; j <= numAmenities; j++) {
+            let amenitieId = faker.datatype.number({ min: 1 , max: 8 });
+
+            added.add(amenitieId)
+        }
+
+        added.forEach(async (amenity) => { 
+
+            await dbQuery('INSERT INTO rooms_amenities SET ?', {id_room: newRoom.id, id_amenitie: amenity});
+        });
     }
+}
 
-    for (let i = 0; i < 100; i++) {
-        const bookingData = createRandomBooking();
-        console.log(bookingData);
-        await dbQuery(insert, bookingData);
+async function insertBookings() {
+
+    for (let i = 1; i < 101; i++) {
+        const bookingData = await createRandomBooking(i);
+
+        await dbQuery('INSERT INTO bookings SET ?', bookingData);
     }
+}
 
-    for (let i = 0; i < 20; i++) {
-        const reviewData = createRandomReview();
-        console.log(reviewData);
-        await dbQuery(insert, reviewData);
+async function insertReviews() {
+
+    for (let i = 1; i < 21; i++) {
+        const reviewData = await createRandomReview(i);
+
+        await dbQuery('INSERT INTO reviews SET ?', reviewData);
     }
 }
 
 async function run() {
     dbConnection();
-    // const result = await dbQuery(insert, user);
-    // const amenities = await dbQuery("SELECT * FROM amenities");
-    // const users = await dbQuery("SELECT password FROM users WHERE name = 'Agustin Alonso'");
-    insertDataBase();
-    dbEnd();
 
-    // return [amenities, users]
-    // return users
-    // return result
+    insertUsers();
+    insertRooms();
+    insertReviews();
+
+    setTimeout(() => {
+        insertBookings();
+    }, 3000)
+
+    setTimeout(() =>{
+        dbEnd();
+    }, 5000)
 }
 
-// const insert = "UPDATE users SET ? WHERE id = 1";
-// const user = {password: encryptPassword('000000')}
-// const insert = 'INSERT INTO users SET ?'
-
-run();
+run()

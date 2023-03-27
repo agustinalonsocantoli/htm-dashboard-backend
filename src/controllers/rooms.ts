@@ -1,51 +1,57 @@
-import roomsData from '../JSON/DataRooms.json';
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
+import { dbQuery } from '../database';
+import { Room } from '../models/rooms';
 
 const roomsController = {
 
-    getRooms: (_req: Request, res: Response): Response | void => {
+    getRooms: async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
         try{
+            const roomsData: Room | unknown = await dbQuery('SELECT * FROM rooms')
 
-            return res.json({rooms: roomsData});
+            res.json(roomsData);
         } catch(err) {
-            res.send({message: "Error"});
-            console.log(err);
+            next(err);
+            res.send({message: err});
         }
     },
-    getRoom: (req: Request, res: Response): Response | void => {
+    getRoom: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try{
+            const roomData: Room | unknown = await dbQuery('SELECT * FROM rooms WHERE id = ?', req.params.id)
 
-            return res.json({room: roomsData.find(room => room.id === req.params.id)});
+            res.json(roomData);
         } catch(err) {
-            res.send({message: "Error"});
-            console.log(err);
+            next(err);
+            res.send({message: err});
         }
     },
-    newRoom: (req: Request, res: Response): Response | void => {
+    newRoom: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try{
+            await dbQuery('INSERT INTO rooms SET ?', req.body)
 
-            return res.json ({success: true, room: req.body});
+            res.json ({success: true, message: `Create New Room ${req.body}`});
         } catch(err) {
+            next(err);
             res.send({message: "Error"});
-            console.log(err);
         }
     },
-    uptadeRoom: (_req: Request, res: Response): Response | void => {
+    uptadeRoom: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try{
+            await dbQuery('UPDATE rooms SET ? WHERE id = ?', [req.body, req.params.id])
 
-            return res.json ({success: true});
+            res.json ({success: true, message: `Room ${req.params.id} update succesfully`});
         } catch(err) {
+            next(err);
             res.send({message: "Error"});
-            console.log(err);
         }
     },
-    deleteRoom: (_req: Request, res: Response): Response | void => {
+    deleteRoom: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try{
+            await dbQuery('DELETE FROM rooms WHERE id = ?', req.params.id)
 
-            return res.json ({success: true});
+            res.json ({success: true, message: `Room ${req.params.id} delete`});
         } catch(err) {
+            next(err);
             res.send({message: "Error"});
-            console.log(err);
         }
     },
 }

@@ -3,10 +3,8 @@ export type Booking = {
     id?: number; 
     name: string;
     date: Date;
-    checkinDate: string;
-    checkinTime: string;
-    checkoutDate: string;
-    checkoutTime: string;
+    checkin: Date;
+    checkout: Date;
     note: string;
     type: string;
     status: string;

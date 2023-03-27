@@ -30,13 +30,13 @@ export const dbEnd = () => {
     })
 }
 
-export const dbQuery = (query: any, data: object | null = null) => {
+export const dbQuery = (query: any, data: any | null = null) => {
+
     return new Promise((resolve, reject) => {
         connection.query( query, data, function(error, results) {
                 if(error) reject(error);
 
                 resolve(results)
-                console.log(results);
             }
         );
     })

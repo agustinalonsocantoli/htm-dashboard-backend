@@ -1,56 +1,57 @@
-import usersData from '../JSON/DataUsers.json';
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
+import { dbQuery } from '../database';
+import { User } from '../models/users';
 
 const usersController = {
 
-    getUsers: (_req: Request, res: Response): Response | void => {
+    getUsers: async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
         try{
+            const usersData: User | unknown = await dbQuery('SELECT * FROM users')
 
-            return res.json({users: usersData});
+            res.json(usersData);
         } catch(err) {
-
-            res.send({message: "Error"});
-            console.log(err);
+            next(err)
+            res.send({message: err});
         }
     },
-    getUser: (req: Request, res: Response): Response | void => {
+    getUser: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try{
+            const userData: User | unknown = await dbQuery('SELECT * FROM users WHERE id = ?', req.params.id)
 
-            return res.json({user: usersData.find(user => user.id === req.params.id)});
+            res.json(userData);
         } catch(err) {
-
-            res.send({message: "Error"});
-            console.log(err);
+            next(err)
+            res.send({message: err});
         }
     },
-    newUser: (req: Request, res: Response): Response | void => {
+    newUser: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try{
+            await dbQuery('INSERT INTO users SET ?', req.body)
 
-            return res.json ({success: true, user: req.body});
+            res.json ({success: true, message: `Create New User ${req.body}`});
         } catch(err) {
-
-            res.send({message: "Error"});
-            console.log(err);
+            next(err)
+            res.send({message: err});
         }
     },
-    uptadeUser: (_req: Request, res: Response): Response | void => {
+    uptadeUser: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try{
+            await dbQuery('UPDATE users SET ? WHERE id = ?', [req.body, req.params.id])
 
-            return res.json ({success: true});
+            res.json ({success: true, message: `User ${req.params.id} update succesfully`})
         } catch(err) {
-
-            res.send({message: "Error"});
-            console.log(err);
+            next(err)
+            res.send({message: err});
         }
     },
-    deleteUser: (_req: Request, res: Response): Response | void => {
+    deleteUser: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try{
+            await dbQuery('DELETE FROM users WHERE id = ?', req.params.id)
 
-            return res.json ({success: true});
+            res.json ({success: true, message: `Room ${req.params.id} delete`});
         } catch(err) {
-
-            res.send({message: "Error"});
-            console.log(err);
+            next(err)
+            res.send({message: err});
         }
     },
 }
