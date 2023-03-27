@@ -1,57 +1,56 @@
-import { Request, Response, NextFunction } from 'express';
-import { dbQuery } from '../database';
-import { Review } from '../models/reviews';
+import reviewsData from '../JSON/DataReviews.json';
+import { Request, Response } from 'express';
 
 const reviewsController = {
 
-    getReviews: async (_req: Request, res: Response, next: NextFunction): Promise<any> => {
+    getReviews: (_req: Request, res: Response): Response | void => {
         try{
-            const reviewsData: Review | unknown = dbQuery('SELECT * FROM reviews')
             
-            res.json(reviewsData);
+            return res.json({reviews: reviewsData});
         } catch(err) {
-            next(err)
-            res.send({message: err});
-        }
-    },
-    getReview: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
-        try{
-            const reviewData: Review | unknown = dbQuery('SELECT * FROM reviews WHERE id = ?', req.params.id)
             
-            res.json(reviewData);
-        } catch(err) {
-            next(err)
-            res.send({message: err});
+            res.send({message: "Error"});
+            console.log(err);
         }
     },
-    newReview: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    getReview: (req: Request, res: Response): Response | void => {
         try{
-            await dbQuery('INSERT INTO reviews SET ?', req.body)
-
-            res.json ({success: true, message: `Create Review ${req.body}`});
+            
+            return res.json({review: reviewsData.find(review => review.id === req.params.id)});
         } catch(err) {
-            next(err)
-            res.send({message: err});
+            
+            res.send({message: "Error"});
+            console.log(err);
         }
     },
-    uptadeReview: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    newReview: (req: Request, res: Response): Response | void => {
         try{
-            await dbQuery('UPDATE reviews SET ? WHERE id = ?', [req.body, req.params.id])
-
-            res.json ({success: true, message: `Review ${req.params.id} update succesfully`});
+            
+            return res.json ({success: true, review: req.body});
         } catch(err) {
-            next(err)
-            res.send({message: err});
+            
+            res.send({message: "Error"});
+            console.log(err);
         }
     },
-    deleteReview: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    uptadeReview: (_req: Request, res: Response): Response | void => {
         try{
-            await dbQuery('DELETE FROM reviews WHERE id = ?', req.params.id)
-
-            res.json ({success: true, message: `Review ${req.params.id} delete`});
+            
+            return res.json ({success: true});
         } catch(err) {
-next(err)
-            res.send({message: err});
+            
+            res.send({message: "Error"});
+            console.log(err);
+        }
+    },
+    deleteReview: (_req: Request, res: Response): Response | void => {
+        try{
+
+            return res.json ({success: true});
+        } catch(err) {
+
+            res.send({message: "Error"});
+            console.log(err);
         }
     },
 }

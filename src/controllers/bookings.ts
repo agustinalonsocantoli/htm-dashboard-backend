@@ -1,58 +1,53 @@
-import { Request, Response, NextFunction } from 'express';
-import { dbQuery } from '../database';
-import { Booking } from '../models/bookings';
+import bookingsData from '../JSON/DataBookings.json';
+import { Request, Response } from 'express';
 
 const bookingsController = {
 
-    getBookings: async (_req: Request, res: Response, next: NextFunction): Promise<any> => {
+    getBookings: (_req: Request, res: Response): Response | void => {
         try{
-            const bookingsData: Booking | unknown = await dbQuery('SELECT * FROM bookings');
+            return res.json({bookings: bookingsData});
 
-            res.json(bookingsData);
+            
         } catch(err) {
-            next(err)
-            res.send({message: err});
+
+            res.send({message: "Error"});
+            console.log(err);
         }
     },
-    getBook: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    getBook: (req: Request, res: Response): Response | void => {
         try{
-            const bookingData: Booking | unknown = await dbQuery('SELECT * FROM bookings WHERE id = ?', req.params.id);
-
-            res.json(bookingData);
+            return res.json({book: bookingsData.find(book => book.id === req.params.id)});
         } catch(err) {
-            next(err)
-            res.send({message: err});
+
+            res.send({message: "Error"});
+            console.log(err);
         }
     },
-    newBook: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    newBook: (req: Request, res: Response): Response | void => {
         try{
-            await dbQuery('INSERT INTO bookings SET ?', req.body)
-
-            res.json ({success: true, message: `Create New Book ${req.body}`});
+            return res.json ({success: true, book: req.body});
         } catch(err) {
-            next(err)
-            res.send({message: err});
+
+            res.send({message: "Error"});
+            console.log(err);
         }
 
     },
-    uptadeBook: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    uptadeBook: (_req: Request, res: Response): Response | void => {
         try{
-            await dbQuery('UPDATE bookings SET ? WHERE id = ?', [req.body, req.params.id])
-
-            res.json ({success: true, message: `Book ${req.params.id} update succesfully`});
+            return res.json ({success: true});
         } catch(err) {
-    next(err)           
-            res.send({message: err});
+
+            res.send({message: "Error"});
+            console.log(err);
         }
     },
-    deleteBook: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    deleteBook: (_req: Request, res: Response): Response | void => {
         try{
-            await dbQuery('DELETE FROM bookings WHERE id = ?', req.params.id)
-
-            res.json ({success: true, message: `Book ${req.params.id} delete`});
+            return res.json ({success: true});
         } catch(err) {
-            next(err)
-            res.send({message: err});
+            res.send({message: "Error"});
+            console.log(err);
         }
     },
 }

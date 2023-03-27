@@ -1,10 +1,14 @@
-import { dbConnection, dbEnd, dbQuery } from './database';
 import bcrypt from 'bcrypt';
 import { faker } from '@faker-js/faker';
-import { User } from './models/users';
-import { Room } from './models/rooms';
-import { Booking } from './models/bookings';
-import { Review } from './models/reviews';
+import { IntUser } from './models/users';
+import { IntRoom } from './models/rooms';
+import { IntBooking } from './models/bookings';
+import { IntReview } from './models/reviews';
+import User from './models/users';
+import Room from './models/rooms';
+import Booking from './models/bookings';
+import Review from './models/reviews';
+import { dbConnection, dbEnd } from './database';
 
 const imgPerson = [
     "https://images.unsplash.com/photo-1596305589440-2e180399a760?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
@@ -33,6 +37,17 @@ const note = [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sollicitudin elementum odio, et laoreet dui dapibus in. Curabitur nec accumsan tellus, mattis aliquam diam. Praesent felis augue, consequat sodales euismod at, sollicitudin sed"
 ]
 
+const amenities = [
+    "Air conditioner", 
+    "Shower", 
+    "Towels", 
+    "Smart Locker", 
+    "24 Hours Guard", 
+    "Free Wifi", 
+    "Television", 
+    "Room Services"
+]
+
 const encryptPassword = (password: string): string => {
     
     const salt = bcrypt.genSaltSync(10);
@@ -47,7 +62,7 @@ export const validatePassword = (password: string, token: string): boolean => {
     return compare
 } 
 
-async function createRandomUser(idNum: number): Promise<User> {
+async function createRandomUser(idNum: number): Promise<IntUser> {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
 
@@ -64,13 +79,14 @@ async function createRandomUser(idNum: number): Promise<User> {
     };
 }
 
-async function createRandomRoom(idNum: number): Promise<Room> {
+async function createRandomRoom(idNum: number, randomAmenities: string[]): Promise<IntRoom> {
 
     return {
         id: idNum,
         name: `${faker.helpers.arrayElement(['Deluxe', 'Single'])} ${faker.datatype.number({ min: 100, max: 400 })}`,
         src: faker.helpers.arrayElement(imgRoom),
         type: faker.helpers.arrayElement(['Double Bed', 'Single Bed', 'Double Superior']),
+        amenities: randomAmenities,
         price: faker.datatype.number({ min: 250, max: 750 }),
         offer: faker.datatype.number({ min: 5, max: 25 }),
         status: faker.helpers.arrayElement(['Booked', 'Available']),
@@ -78,7 +94,7 @@ async function createRandomRoom(idNum: number): Promise<Room> {
 }
 
 
-async function createRandomBooking(idNum: number): Promise<Booking> {
+async function createRandomBooking(idNum: number): Promise<IntBooking> {
     const formatDate = faker.date.between('2022-01-01', '2023-02-02');
     const formatCheckin = faker.date.between(formatDate, '2023-02-02');
 
@@ -91,12 +107,11 @@ async function createRandomBooking(idNum: number): Promise<Booking> {
         checkout: faker.date.between(formatCheckin, '2023-02-02'),
         note: faker.helpers.arrayElement(note),
         type: faker.helpers.arrayElement(['Double Bed', 'Single Bed', 'Double Superior']),
-        status: faker.helpers.arrayElement(['Booked', 'Refund', 'Progress']),
-        id_room: faker.datatype.number({ min: 1, max: 50 })
+        status: faker.helpers.arrayElement(['Booked', 'Refund', 'Progress'])
     };
 }
 
-async function createRandomReview(idNum: number): Promise<Review> {
+async function createRandomReview(idNum: number): Promise<IntReview> {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
 
@@ -117,32 +132,36 @@ async function insertUsers() {
 
     for (let i = 1; i < 21; i++) {
         const userData = await createRandomUser(i);
-
-        await dbQuery('INSERT INTO users SET ?', userData);
+        
+        await User.create(userData)
     }
 }
 
 async function insertRooms() {
 
     for (let i = 1; i < 51; i++) {
-        const roomData = await createRandomRoom(i);
-
-        await dbQuery('INSERT INTO rooms SET ?', roomData);
-        const newRoom: any = roomData;
-
         const numAmenities = faker.datatype.number({ min: 1 , max: 8 });
-        const added = new Set()
+        const added = new Set();
+        let randomAmenities: Array<string> = [];
 
         for (let j = 0; j <= numAmenities; j++) {
-            let amenitieId = faker.datatype.number({ min: 1 , max: 8 });
-
-            added.add(amenitieId)
+            let amenitiyAdd: string = faker.helpers.arrayElement(amenities);
+    
+            added.add(amenitiyAdd)
         }
-
-        added.forEach(async (amenity) => { 
-
-            await dbQuery('INSERT INTO rooms_amenities SET ?', {id_room: newRoom.id, id_amenitie: amenity});
+    
+        added.forEach((amenity: any) => { 
+    
+            randomAmenities.push(amenity)
         });
+
+
+        const roomData = await createRandomRoom(i, randomAmenities);
+
+        await Room.create(roomData)
+
+        added.clear();
+        randomAmenities = [];
     }
 }
 
@@ -151,7 +170,8 @@ async function insertBookings() {
     for (let i = 1; i < 101; i++) {
         const bookingData = await createRandomBooking(i);
 
-        await dbQuery('INSERT INTO bookings SET ?', bookingData);
+        await Booking.create(bookingData)
+        
     }
 }
 
@@ -160,24 +180,22 @@ async function insertReviews() {
     for (let i = 1; i < 21; i++) {
         const reviewData = await createRandomReview(i);
 
-        await dbQuery('INSERT INTO reviews SET ?', reviewData);
+        await Review.create(reviewData)
     }
 }
 
 async function run() {
-    dbConnection();
+    await dbConnection();
 
-    insertUsers();
-    insertRooms();
-    insertReviews();
+    await insertUsers();
+    await insertRooms();
+    await insertReviews();
+    await insertBookings();
 
-    setTimeout(() => {
-        insertBookings();
+    setTimeout( async () =>{
+        await dbEnd();
+        console.log('Disconnect');
     }, 3000)
-
-    setTimeout(() =>{
-        dbEnd();
-    }, 5000)
 }
 
 run()
