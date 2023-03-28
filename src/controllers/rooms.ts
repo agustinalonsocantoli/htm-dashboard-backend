@@ -1,15 +1,16 @@
 import roomsData from '../JSON/DataRooms.json';
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
+import Room from '../models/rooms';
 
 const roomsController = {
 
-    getRooms: (_req: Request, res: Response): Response | void => {
+    getRooms: async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
         try{
-
-            return res.json({rooms: roomsData});
+            Room.find({})
+            
         } catch(err) {
-            res.send({message: "Error"});
-            console.log(err);
+            next(err)
+            res.send({message: err});
         }
     },
     getRoom: (req: Request, res: Response): Response | void => {

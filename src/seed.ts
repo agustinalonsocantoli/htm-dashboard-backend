@@ -48,7 +48,7 @@ const amenities = [
     "Room Services"
 ]
 
-const encryptPassword = (password: string): string => {
+export const encryptPassword = (password: string): string => {
     
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
