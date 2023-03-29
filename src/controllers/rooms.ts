@@ -12,11 +12,14 @@ const roomsController = {
         .catch((e: Error) => next(e));
 
         try {
-            res.json(rooms);
+            res.status(200).json({
+                message: "Rooms obtained successfully",
+                data: rooms
+            });
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();
@@ -29,11 +32,14 @@ const roomsController = {
         .catch((e: Error) => next(e));
 
         try {
-            res.json(room);
+            res.status(200).json({
+                message: "Room obtained successfully",
+                data: room
+            });
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();
@@ -56,11 +62,14 @@ const roomsController = {
         .catch((e) => next(e));
 
         try {
-            res.status(200).json(newRoom)
+            res.status(200).json({
+                message: "Room created successfully",
+                data: newRoom
+            })
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();
@@ -84,13 +93,13 @@ const roomsController = {
 
         try {
             res.status(200).json({
-                message: `Edit room Id-${req.params.id}`,
-                update: editRoom
+                message: `Edit room Id-${req.params.id} successfully`,
+                data: editRoom
             })
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();
@@ -103,11 +112,13 @@ const roomsController = {
         .catch((e: Error) => next(e));
 
         try {
-            res.status(200).json({message: `Room Id-${req.params.id} deleted successfully`})
+            res.status(200).json({
+                message: `Room Id-${req.params.id} deleted successfully`
+            })
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();

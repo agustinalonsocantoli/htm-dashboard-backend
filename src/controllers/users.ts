@@ -13,14 +13,18 @@ const usersController = {
         .catch((e: Error) => next(e));
 
         try {
-            res.json(users);
+            res.status(200).json({
+                message: "Users obtained successfully", 
+                data: users
+            });
+            await dbEnd();
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
-        await dbEnd();
+        
     },
     getUser: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         await dbConnection();
@@ -30,14 +34,16 @@ const usersController = {
         .catch((e: Error) => next(e));
 
         try {
-            res.json(user);
+            res.json({
+                message: "User obtained successfully",
+                data: user});
+            await dbEnd();
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
-        await dbEnd();
     },
     newUser: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         await dbConnection();
@@ -60,11 +66,14 @@ const usersController = {
         .catch((e) => next(e));
 
         try {
-            res.status(200).json(newUser)
+            res.status(200).json({
+                message: "User created successfully",
+                data: newUser
+            })
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();
@@ -90,13 +99,13 @@ const usersController = {
 
         try {
             res.status(200).json({
-                message: `Edit user Id-${req.params.id}`,
-                update: editUser
+                message: `Edit user Id-${req.params.id} successfully`,
+                data: editUser
             })
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();
@@ -109,11 +118,13 @@ const usersController = {
         .catch((e: Error) => next(e));
 
         try {
-            res.status(200).json({message: `User Id-${req.params.id} deleted successfully`})
+            res.status(200).json({
+                message: `User Id-${req.params.id} deleted successfully`
+            })
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();

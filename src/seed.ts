@@ -1,13 +1,9 @@
 import bcrypt from 'bcrypt';
 import { faker } from '@faker-js/faker';
-import { IntUser } from './models/users';
-import { IntRoom } from './models/rooms';
-import { IntBooking } from './models/bookings';
-import { IntReview } from './models/reviews';
-import User from './models/users';
-import Room from './models/rooms';
-import Booking from './models/bookings';
-import Review from './models/reviews';
+import User, { IntUser } from './models/users';
+import Room, { IntRoom } from './models/rooms';
+import Booking, { IntBooking } from './models/bookings';
+import Review, { IntReview } from './models/reviews';
 import { dbConnection, dbEnd } from './database';
 
 const imgPerson = [
@@ -184,7 +180,7 @@ async function insertReviews() {
     }
 }
 
-async function run() {
+export async function run() {
     await dbConnection();
 
     await insertUsers();
@@ -197,5 +193,3 @@ async function run() {
         console.log('Disconnect');
     }, 3000)
 }
-
-run()

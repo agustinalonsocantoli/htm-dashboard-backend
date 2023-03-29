@@ -12,11 +12,14 @@ const bookingsController = {
         .catch((e: Error) => next(e));
 
         try {
-            res.json(bookings);
+            res.status(200).json({
+                message: "Bookings obtained successfully",
+                data: bookings
+            });
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();
@@ -29,11 +32,14 @@ const bookingsController = {
         .catch((e: Error) => next(e));
 
         try {
-            res.json(book);
+            res.status(200).json({
+                message: "Booking obtained successfully",
+                data: book
+            });
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();
@@ -57,11 +63,14 @@ const bookingsController = {
         .catch((e) => next(e));
 
         try {
-            res.status(200).json(newBook)
+            res.status(200).json({
+                message: "Booking created successfully",
+                data: newBook
+            })
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();
@@ -86,13 +95,13 @@ const bookingsController = {
 
         try {
             res.status(200).json({
-                message: `Edit booking Id-${req.params.id}`,
-                update: editBook
+                message: `Edit booking Id-${req.params.id} successfully`,
+                data: editBook
             })
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();
@@ -105,11 +114,13 @@ const bookingsController = {
         .catch((e: Error) => next(e));
 
         try {
-            res.status(200).json({message: `Booking Id-${req.params.id} deleted successfully`})
+            res.status(200).json({
+                message: `Booking Id-${req.params.id} deleted successfully`
+            })
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();

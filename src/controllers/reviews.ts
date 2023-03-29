@@ -12,11 +12,14 @@ const reviewsController = {
         .catch((e: Error) => next(e));
 
         try {
-            res.json(reviews);
+            res.status(200).json({
+                message: "Reviews obtained successfully",
+                data: reviews
+            });
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();
@@ -29,11 +32,14 @@ const reviewsController = {
         .catch((e: Error) => next(e));
 
         try {
-            res.json(review);
+            res.status(200).json({
+                message: "Review obtained successfully",
+                data: review
+            });
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();
@@ -57,11 +63,14 @@ const reviewsController = {
         .catch((e) => next(e));
 
         try {
-            res.status(200).json(newReview)
+            res.status(200).json({
+                message: "Review created successfully",
+                data: newReview
+            })
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();
@@ -86,13 +95,13 @@ const reviewsController = {
 
         try {
             res.status(200).json({
-                message: `Edit review Id-${req.params.id}`,
-                update: editReview
+                message: `Edit review Id-${req.params.id} successfully`,
+                data: editReview
             })
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();
@@ -105,11 +114,13 @@ const reviewsController = {
         .catch((e: Error) => next(e));
 
         try {
-            res.status(200).json({message: `Review Id-${req.params.id} deleted successfully`})
+            res.status(200).json({
+                message: `Review Id-${req.params.id} deleted successfully`
+            })
 
         } catch (err) {
             next(err);
-            res.send({message: err});
+            res.status(500).send({message: err});
         }
         
         await dbEnd();
