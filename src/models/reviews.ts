@@ -1,7 +1,6 @@
 import { Schema, model } from "mongoose";
 
 export interface IntReview {
-    id: Number;
     src: String;
     date: Date;
     customer: String;
@@ -13,7 +12,6 @@ export interface IntReview {
 }
 
 const ReviewSchema = new Schema<IntReview>({
-    id: Number,
     src: String,
     date: Date,
     customer: String,

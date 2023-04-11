@@ -19,13 +19,7 @@ require('./auth/auth');
 export const PORT = process.env.PORT_KEY;
 
 // CORS
-const allowedOrigins = [`http://localhost:${PORT}`];
-
-const options: cors.CorsOptions = {
-  origin: allowedOrigins
-};
-
-app.use(cors(options));
+app.use(cors());
 
 app.use(express.json());
 

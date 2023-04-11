@@ -27,7 +27,7 @@ const bookingsController = {
     getBook: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         await dbConnection();
 
-        const book: IntBooking | unknown = await Booking.findOne({id: req.params.id})
+        const book: IntBooking | unknown = await Booking.findOne({_id: req.params.id})
         .exec()
         .catch((e: Error) => next(e));
 
@@ -49,7 +49,6 @@ const bookingsController = {
 
         const newBook: IntBooking | {} = {
             src: req.body.src,
-            id: req.body.id,
             name: req.body.name,
             date: req.body.date,
             checkin: req.body.checkin,
@@ -80,7 +79,6 @@ const bookingsController = {
 
         const editBook: IntBooking | {} = {
             src: req.body.src,
-            id: req.body.id,
             name: req.body.name,
             date: req.body.date,
             checkin: req.body.checkin,
@@ -90,7 +88,7 @@ const bookingsController = {
             status: req.body.status,
         }
 
-        await Booking.findOneAndUpdate({id: req.params.id}, editBook)
+        await Booking.findOneAndUpdate({_id: req.params.id}, editBook)
         .catch((e) => next(e));
 
         try {
@@ -109,7 +107,7 @@ const bookingsController = {
     deleteBook: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         await dbConnection();
 
-        await Booking.findOneAndDelete({id: req.params.id})
+        await Booking.findOneAndDelete({_id: req.params.id})
         .exec()
         .catch((e: Error) => next(e));
 

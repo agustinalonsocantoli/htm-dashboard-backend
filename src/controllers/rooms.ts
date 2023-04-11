@@ -27,7 +27,7 @@ const roomsController = {
     getRoom: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         await dbConnection();
 
-        const room: IntRoom | unknown = await Room.findOne({id: req.params.id})
+        const room: IntRoom | unknown = await Room.findOne({_id: req.params.id})
         .exec()
         .catch((e: Error) => next(e));
 
@@ -50,7 +50,6 @@ const roomsController = {
         const newRoom: IntRoom | {} = {
             src: req.body.src,
             name: req.body.name,
-            id: req.body.id,
             amenities: req.body.amenities,
             type: req.body.type,
             price: req.body.price,
@@ -88,7 +87,7 @@ const roomsController = {
             status: req.body.status,
         }
 
-        await Room.findOneAndUpdate({id: req.params.id}, editRoom)
+        await Room.findOneAndUpdate({_id: req.params.id}, editRoom)
         .catch((e) => next(e));
 
         try {
@@ -107,7 +106,7 @@ const roomsController = {
     deleteRoom: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         await dbConnection();
 
-        await Room.findOneAndDelete({id: req.params.id})
+        await Room.findOneAndDelete({_id: req.params.id})
         .exec()
         .catch((e: Error) => next(e));
 

@@ -3,7 +3,6 @@ import { Schema, model } from "mongoose";
 export interface IntRoom {
     src: String;
     name: String;
-    id: Number;
     amenities: Array<String>;
     type: String;
     price: Number;
@@ -14,7 +13,6 @@ export interface IntRoom {
 const RoomSchema = new Schema<IntRoom>({
     src: String,
     name: String,
-    id: Number,
     amenities: Array<String>,
     type: String,
     price: Number,

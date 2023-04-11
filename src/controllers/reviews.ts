@@ -27,7 +27,7 @@ const reviewsController = {
     getReview: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         await dbConnection();
 
-        const review: IntReview | unknown = await Review.findOne({id: req.params.id})
+        const review: IntReview | unknown = await Review.findOne({_id: req.params.id})
         .exec()
         .catch((e: Error) => next(e));
 
@@ -79,7 +79,6 @@ const reviewsController = {
         await dbConnection();
 
         const editReview: IntReview | {} = {
-            id: req.body.id,
             src: req.body.src,
             date: req.body.date,
             customer: req.body.customer,
@@ -90,7 +89,7 @@ const reviewsController = {
             archived: req.body.archived,
         }
 
-        await Review.findOneAndUpdate({id: req.params.id}, editReview)
+        await Review.findOneAndUpdate({_id: req.params.id}, editReview)
         .catch((e) => next(e));
 
         try {
@@ -109,7 +108,7 @@ const reviewsController = {
     deleteReview: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         await dbConnection();
 
-        await Review.findOneAndDelete({id: req.params.id})
+        await Review.findOneAndDelete({_id: req.params.id})
         .exec()
         .catch((e: Error) => next(e));
 

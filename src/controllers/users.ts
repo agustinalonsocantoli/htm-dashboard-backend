@@ -29,7 +29,7 @@ const usersController = {
     getUser: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         await dbConnection();
 
-        const user: IntUser | unknown = await User.findOne({id: req.params.id})
+        const user: IntUser | unknown = await User.findOne({_id: req.params.id})
         .exec()
         .catch((e: Error) => next(e));
 
@@ -51,7 +51,6 @@ const usersController = {
         const hash = encryptPassword(req.body.password)
 
         const newUser: IntUser | {} = {
-            id: req.body.id,
             src: req.body.src,
             name: req.body.name,
             email: req.body.email,
@@ -94,7 +93,7 @@ const usersController = {
             password: hash,
         }
 
-        await User.findOneAndUpdate({id: req.params.id}, editUser)
+        await User.findOneAndUpdate({_id: req.params.id}, editUser)
         .catch((e) => next(e));
 
         try {
@@ -113,7 +112,7 @@ const usersController = {
     deleteUser: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         await dbConnection();
 
-        await User.findOneAndDelete({id: req.params.id})
+        await User.findOneAndDelete({_id: req.params.id})
         .exec()
         .catch((e: Error) => next(e));
 

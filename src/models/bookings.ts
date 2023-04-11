@@ -2,7 +2,6 @@ import { model, Schema } from "mongoose";
 
 export interface IntBooking {
     src: String;
-    id: Number;
     name: String;
     date: Date;
     checkin: Date;
@@ -14,7 +13,6 @@ export interface IntBooking {
 
 const BookingSchema = new Schema<IntBooking>({
     src: String,
-    id: Number,
     name: String,
     date: Date,
     checkin: Date,

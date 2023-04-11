@@ -58,12 +58,11 @@ export const validatePassword = (password: string, token: string): boolean => {
     return compare
 } 
 
-async function createRandomUser(idNum: number): Promise<IntUser> {
+async function createRandomUser(): Promise<IntUser> {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
 
     return {
-        id: idNum,
         name: `${firstName} ${lastName}`,
         src: faker.helpers.arrayElement(imgPerson),
         email: faker.internet.email(firstName, lastName),
@@ -75,10 +74,9 @@ async function createRandomUser(idNum: number): Promise<IntUser> {
     };
 }
 
-async function createRandomRoom(idNum: number, randomAmenities: string[]): Promise<IntRoom> {
+async function createRandomRoom(randomAmenities: string[]): Promise<IntRoom> {
 
     return {
-        id: idNum,
         name: `${faker.helpers.arrayElement(['Deluxe', 'Single'])} ${faker.datatype.number({ min: 100, max: 400 })}`,
         src: faker.helpers.arrayElement(imgRoom),
         type: faker.helpers.arrayElement(['Double Bed', 'Single Bed', 'Double Superior']),
@@ -90,12 +88,11 @@ async function createRandomRoom(idNum: number, randomAmenities: string[]): Promi
 }
 
 
-async function createRandomBooking(idNum: number): Promise<IntBooking> {
+async function createRandomBooking(): Promise<IntBooking> {
     const formatDate = faker.date.between('2022-01-01', '2023-02-02');
     const formatCheckin = faker.date.between(formatDate, '2023-02-02');
 
     return {
-        id: idNum,
         name: faker.name.fullName(),
         src: faker.internet.avatar(),
         date: formatDate,
@@ -107,12 +104,11 @@ async function createRandomBooking(idNum: number): Promise<IntBooking> {
     };
 }
 
-async function createRandomReview(idNum: number): Promise<IntReview> {
+async function createRandomReview(): Promise<IntReview> {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
 
     return {
-        id: idNum,
         src: faker.internet.avatar(),
         date: faker.date.between('2022-01-01', '2023-02-02'),
         customer: `${firstName} ${lastName}`,
@@ -127,7 +123,7 @@ async function createRandomReview(idNum: number): Promise<IntReview> {
 async function insertUsers() {
 
     for (let i = 1; i < 21; i++) {
-        const userData = await createRandomUser(i);
+        const userData = await createRandomUser();
         
         await User.create(userData)
     }
@@ -152,7 +148,7 @@ async function insertRooms() {
         });
 
 
-        const roomData = await createRandomRoom(i, randomAmenities);
+        const roomData = await createRandomRoom(randomAmenities);
 
         await Room.create(roomData)
 
@@ -164,7 +160,7 @@ async function insertRooms() {
 async function insertBookings() {
 
     for (let i = 1; i < 101; i++) {
-        const bookingData = await createRandomBooking(i);
+        const bookingData = await createRandomBooking();
 
         await Booking.create(bookingData)
         
@@ -174,13 +170,15 @@ async function insertBookings() {
 async function insertReviews() {
 
     for (let i = 1; i < 21; i++) {
-        const reviewData = await createRandomReview(i);
+        const reviewData = await createRandomReview();
 
         await Review.create(reviewData)
     }
 }
 
 export async function run() {
+    console.log("Seed Start")
+
     await dbConnection();
 
     await insertUsers();
@@ -190,6 +188,6 @@ export async function run() {
 
     setTimeout( async () =>{
         await dbEnd();
-        console.log('Disconnect');
+        console.log('Seed End');
     }, 3000)
 }

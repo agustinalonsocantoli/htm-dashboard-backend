@@ -3,7 +3,6 @@ import { Schema, model } from "mongoose";
 export interface IntUser {
     src: String;
     name: String;
-    id: Number;
     email: String;
     start: Date;
     job: String;
@@ -15,7 +14,6 @@ export interface IntUser {
 const UserSchema = new Schema<IntUser>({
     src: String,
     name: String,
-    id: Number,
     email: String,
     start: Date,
     job: String,
