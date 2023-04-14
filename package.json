@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev src/index.ts",
+    "seed": "ts-node-dev src/seed.ts",
     "tsc": "tsc",
     "start": "node build/index.js",
     "test": "jest"
@@ -12,6 +13,7 @@
   "author": "Agustin Alonso Cantoli",
   "license": "ISC",
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.0",
@@ -27,6 +29,7 @@
     "@types/body-parser": "^1.19.2",
     "@types/dotenv": "^8.2.0",
     "@types/jsonwebtoken": "^9.0.1",
+    "@types/mysql": "^2.15.21",
     "@types/passport-jwt": "^3.0.8",
     "@types/passport-local": "^1.0.35",
     "bcrypt": "^5.1.0",
@@ -35,8 +38,12 @@
     "dotenv": "^16.0.3",
     "express": "4.18.2",
     "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.3",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.2.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "ts-jest": "^29.0.5"
   }
 }

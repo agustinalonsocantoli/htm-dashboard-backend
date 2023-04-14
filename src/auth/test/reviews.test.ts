@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../src/app';
+import app from '../../app';
 import jwt from "jsonwebtoken";
 import 'dotenv/config'
 
@@ -16,47 +16,47 @@ beforeAll(() => {
 
 describe('Endpoints', () => {
     
-    test("GET method all users without token", async () => {
+    test("GET method all reviews without token", async () => {
         const res = await request(app)
-        .get("/api/users")
+        .get("/api/contact")
 
         expect(res.statusCode).toEqual(401)
     })
 
-    test('GET method all users', async () => {
+    test('GET method all reviews', async () => {
         const res = await request(app)
-        .get('/api/users')
+        .get('/api/contact')
         .set("Authorization", "Bearer " + token);
         
         expect(res.statusCode).toEqual(200)
         expect(res.body).toBeInstanceOf(Object)
     })
 
-    test('GET method user', async () => {
+    test('GET method review', async () => {
         const res = await request(app)
-        .get('/api/users/U00002')
+        .get('/api/contact/C0002')
         .set("Authorization", "Bearer " + token);
         
         expect(res.statusCode).toEqual(200)
         expect(res.body).toBeInstanceOf(Object)
       })
 
-    test('POST method new user', async () => {
-        const newUser = {
-            src: "",
-            name: "Gabriel Rodriguez",
-            id: "U00022",
-            email: "grodriguez@hm.com",
-            start: "2020-01-10",
-            job: "Directing phone calls, coordinating travel plans.",
-            contact: "012 334 55512",
-            status: "active"
+    test('POST method new review', async () => {
+        const newReview = {
+            id: "C0025",
+            date: "2022-03-07",
+            customer: "Kusnaidi Anderson",
+            email: "kanderson@gmail.com",
+            phone: "+34 623 455 928",
+            affair: "recommendation",
+            comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
+            archived: false
         }
 
         const res = await request(app)
-        .post('/api/users')
+        .post('/api/contact')
         .set("Authorization", "Bearer " + token)
-        .send(newUser)
+        .send(newReview)
 
         expect(res.statusCode).toEqual(200)
     })

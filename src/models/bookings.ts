@@ -1,13 +1,27 @@
-export type Booking = {
-    src: any;
-    id: string; 
-    name: string;
-    date: string;
-    checkinDate: string;
-    checkinTime: string;
-    checkoutDate: string;
-    checkoutTime: string;
-    note: string;
-    type: string;
-    status: string;
+import { model, Schema } from "mongoose";
+
+export interface IntBooking {
+    src: String;
+    name: String;
+    date: Date;
+    checkin: Date;
+    checkout: Date;
+    note: String;
+    type: String;
+    status: String;
 }
+
+const BookingSchema = new Schema<IntBooking>({
+    src: String,
+    name: String,
+    date: Date,
+    checkin: Date,
+    checkout: Date,
+    note: String,
+    type: String,
+    status: String
+});
+
+const Booking = model('Booking', BookingSchema);
+
+export default Booking;

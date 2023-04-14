@@ -1,57 +1,128 @@
-import reviewsData from '../JSON/DataReviews.json';
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
+import Review, { IntReview } from '../models/reviews';
+import { dbConnection, dbEnd } from '../database';
 
 const reviewsController = {
 
-    getReviews: (_req: Request, res: Response): Response | void => {
-        try{
-            
-            return res.json({reviews: reviewsData});
-        } catch(err) {
-            
-            res.send({message: "Error"});
-            console.log(err);
-        }
-    },
-    getReview: (req: Request, res: Response): Response | void => {
-        try{
-            
-            return res.json({review: reviewsData.find(review => review.id === req.params.id)});
-        } catch(err) {
-            
-            res.send({message: "Error"});
-            console.log(err);
-        }
-    },
-    newReview: (req: Request, res: Response): Response | void => {
-        try{
-            
-            return res.json ({success: true, review: req.body});
-        } catch(err) {
-            
-            res.send({message: "Error"});
-            console.log(err);
-        }
-    },
-    uptadeReview: (_req: Request, res: Response): Response | void => {
-        try{
-            
-            return res.json ({success: true});
-        } catch(err) {
-            
-            res.send({message: "Error"});
-            console.log(err);
-        }
-    },
-    deleteReview: (_req: Request, res: Response): Response | void => {
-        try{
+    getReviews: async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
+        await dbConnection();
 
-            return res.json ({success: true});
-        } catch(err) {
+        const reviews: IntReview[] | unknown = await Review.find()
+        .exec()
+        .catch((e: Error) => next(e));
 
-            res.send({message: "Error"});
-            console.log(err);
+        try {
+            res.status(200).json({
+                message: "Reviews obtained successfully",
+                data: reviews
+            });
+
+        } catch (err) {
+            next(err);
+            res.status(500).send({message: err});
         }
+        
+        await dbEnd();
+    },
+    getReview: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        await dbConnection();
+
+        const review: IntReview | unknown = await Review.findOne({_id: req.params.id})
+        .exec()
+        .catch((e: Error) => next(e));
+
+        try {
+            res.status(200).json({
+                message: "Review obtained successfully",
+                data: review
+            });
+
+        } catch (err) {
+            next(err);
+            res.status(500).send({message: err});
+        }
+        
+        await dbEnd();
+    },
+    newReview: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        await dbConnection();
+
+        const newReview: IntReview | {} = {
+            id: req.body.id,
+            src: req.body.src,
+            date: req.body.date,
+            customer: req.body.customer,
+            email: req.body.email,
+            phone: req.body.phone,
+            affair: req.body.affair,
+            comment: req.body.comment,
+            archived: req.body.archived,
+        }
+
+        await Review.create(newReview)
+        .catch((e) => next(e));
+
+        try {
+            res.status(200).json({
+                message: "Review created successfully",
+                data: newReview
+            })
+
+        } catch (err) {
+            next(err);
+            res.status(500).send({message: err});
+        }
+        
+        await dbEnd();
+    },
+    uptadeReview: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        await dbConnection();
+
+        const editReview: IntReview | {} = {
+            src: req.body.src,
+            date: req.body.date,
+            customer: req.body.customer,
+            email: req.body.email,
+            phone: req.body.phone,
+            affair: req.body.affair,
+            comment: req.body.comment,
+            archived: req.body.archived,
+        }
+
+        await Review.findOneAndUpdate({_id: req.params.id}, editReview)
+        .catch((e) => next(e));
+
+        try {
+            res.status(200).json({
+                message: `Edit review Id-${req.params.id} successfully`,
+                data: editReview
+            })
+
+        } catch (err) {
+            next(err);
+            res.status(500).send({message: err});
+        }
+        
+        await dbEnd();
+    },
+    deleteReview: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        await dbConnection();
+
+        await Review.findOneAndDelete({_id: req.params.id})
+        .exec()
+        .catch((e: Error) => next(e));
+
+        try {
+            res.status(200).json({
+                message: `Review Id-${req.params.id} deleted successfully`
+            })
+
+        } catch (err) {
+            next(err);
+            res.status(500).send({message: err});
+        }
+        
+        await dbEnd();
     },
 }
 

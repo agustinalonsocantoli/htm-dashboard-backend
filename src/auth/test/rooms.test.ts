@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../src/app';
+import app from '../../app';
 import jwt from "jsonwebtoken";
 import 'dotenv/config'
 
@@ -16,47 +16,47 @@ beforeAll(() => {
 
 describe('Endpoints', () => {
     
-    test("GET method all users without token", async () => {
+    test("GET method all rooms without token", async () => {
         const res = await request(app)
-        .get("/api/users")
+        .get("/api/rooms")
 
         expect(res.statusCode).toEqual(401)
     })
 
-    test('GET method all users', async () => {
+    test('GET method all rooms', async () => {
         const res = await request(app)
-        .get('/api/users')
+        .get('/api/rooms')
         .set("Authorization", "Bearer " + token);
         
         expect(res.statusCode).toEqual(200)
         expect(res.body).toBeInstanceOf(Object)
     })
 
-    test('GET method user', async () => {
+    test('GET method room', async () => {
         const res = await request(app)
-        .get('/api/users/U00002')
+        .get('/api/rooms/R002')
         .set("Authorization", "Bearer " + token);
         
         expect(res.statusCode).toEqual(200)
         expect(res.body).toBeInstanceOf(Object)
       })
 
-    test('POST method new user', async () => {
-        const newUser = {
+    test('POST method new room', async () => {
+        const newRoom = {
             src: "",
-            name: "Gabriel Rodriguez",
-            id: "U00022",
-            email: "grodriguez@hm.com",
-            start: "2020-01-10",
-            job: "Directing phone calls, coordinating travel plans.",
-            contact: "012 334 55512",
-            status: "active"
+            name: "Suite 33",
+            id: "R020", 
+            type: "Suite",
+            amenities: ["Air conditioner", "Shower", "Towels"],
+            price: 900,
+            offer: 50,
+            status: "Available"
         }
 
         const res = await request(app)
-        .post('/api/users')
+        .post('/api/rooms')
         .set("Authorization", "Bearer " + token)
-        .send(newUser)
+        .send(newRoom)
 
         expect(res.statusCode).toEqual(200)
     })

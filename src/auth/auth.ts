@@ -5,7 +5,7 @@ import { Strategy as JWTstrategy, ExtractJwt } from 'passport-jwt';
 import 'dotenv/config';
 
 const userAuth: IUser = {
-    email: 'agusti@hm.com',
+    email: 'agustin@hm.com',
     password: '000000',
 }
 

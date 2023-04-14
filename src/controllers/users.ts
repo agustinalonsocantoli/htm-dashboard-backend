@@ -1,57 +1,132 @@
-import usersData from '../JSON/DataUsers.json';
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
+import User, { IntUser } from '../models/users';
+import { dbConnection, dbEnd } from '../database';
+import { encryptPassword } from '../seed';
 
 const usersController = {
 
-    getUsers: (_req: Request, res: Response): Response | void => {
-        try{
+    getUsers: async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
+        await dbConnection();
 
-            return res.json({users: usersData});
-        } catch(err) {
+        const users: IntUser[] | unknown = await User.find()
+        .exec()
+        .catch((e: Error) => next(e));
 
-            res.send({message: "Error"});
-            console.log(err);
+        try {
+            res.status(200).json({
+                message: "Users obtained successfully", 
+                data: users
+            });
+            await dbEnd();
+
+        } catch (err) {
+            next(err);
+            res.status(500).send({message: err});
         }
+        
+        
     },
-    getUser: (req: Request, res: Response): Response | void => {
-        try{
+    getUser: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        await dbConnection();
 
-            return res.json({user: usersData.find(user => user.id === req.params.id)});
-        } catch(err) {
+        const user: IntUser | unknown = await User.findOne({_id: req.params.id})
+        .exec()
+        .catch((e: Error) => next(e));
 
-            res.send({message: "Error"});
-            console.log(err);
+        try {
+            res.json({
+                message: "User obtained successfully",
+                data: user});
+            await dbEnd();
+
+        } catch (err) {
+            next(err);
+            res.status(500).send({message: err});
         }
+        
     },
-    newUser: (req: Request, res: Response): Response | void => {
-        try{
+    newUser: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        await dbConnection();
 
-            return res.json ({success: true, user: req.body});
-        } catch(err) {
+        const hash = encryptPassword(req.body.password)
 
-            res.send({message: "Error"});
-            console.log(err);
+        const newUser: IntUser | {} = {
+            src: req.body.src,
+            name: req.body.name,
+            email: req.body.email,
+            start: req.body.start,
+            job: req.body.job,
+            contact: req.body.contact,
+            status: req.body.status,
+            password: hash,
         }
+
+        await User.create(newUser)
+        .catch((e) => next(e));
+
+        try {
+            res.status(200).json({
+                message: "User created successfully",
+                data: newUser
+            })
+
+        } catch (err) {
+            next(err);
+            res.status(500).send({message: err});
+        }
+        
+        await dbEnd();
     },
-    uptadeUser: (_req: Request, res: Response): Response | void => {
-        try{
+    uptadeUser: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        await dbConnection();
 
-            return res.json ({success: true});
-        } catch(err) {
+        const hash = encryptPassword(req.body.password)
 
-            res.send({message: "Error"});
-            console.log(err);
+        const editUser: IntUser | {} = {
+            src: req.body.src,
+            name: req.body.name,
+            email: req.body.email,
+            start: req.body.start,
+            job: req.body.job,
+            contact: req.body.contact,
+            status: req.body.status,
+            password: hash,
         }
+
+        await User.findOneAndUpdate({_id: req.params.id}, editUser)
+        .catch((e) => next(e));
+
+        try {
+            res.status(200).json({
+                message: `Edit user Id-${req.params.id} successfully`,
+                data: editUser
+            })
+
+        } catch (err) {
+            next(err);
+            res.status(500).send({message: err});
+        }
+        
+        await dbEnd();
     },
-    deleteUser: (_req: Request, res: Response): Response | void => {
-        try{
+    deleteUser: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        await dbConnection();
 
-            return res.json ({success: true});
-        } catch(err) {
+        await User.findOneAndDelete({_id: req.params.id})
+        .exec()
+        .catch((e: Error) => next(e));
 
-            res.send({message: "Error"});
-            console.log(err);
+        try {
+            res.status(200).json({
+                message: `User Id-${req.params.id} deleted successfully`
+            })
+
+        } catch (err) {
+            next(err);
+            res.status(500).send({message: err});
         }
+        
+        await dbEnd();
     },
 }
 
